@@ -49,9 +49,9 @@ var eos = function(stream, opts, callback) {
 	};
 
 	var onclosenexttick = function() {
-		if (cancelled) return;
-		if (readable && !(rs && (rs.ended && !rs.destroyed))) return callback.call(stream, new Error('premature close'));
-		if (writable && !(ws && (ws.ended && !ws.destroyed))) return callback.call(stream, new Error('premature close'));
+		if (cancelled) return;		
+		if (readable && rs && !rs.ended) return callback.call(stream, new Error('premature close'));
+		if (writable && ws && !ws.ended) return callback.call(stream, new Error('premature close'));
 	};
 
 	var onrequest = function() {
